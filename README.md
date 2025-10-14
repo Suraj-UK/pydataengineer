@@ -73,10 +73,8 @@ poetry run pytest tests/integration
 
 #### Run style checks
 
-```bash
-poetry run mypy --ignore-missing-imports --disallow-untyped-calls --disallow-untyped-defs --disallow-incomplete-defs \
-            data_transformations tests
-
+```powershell
+poetry run mypy --config-file mypy.inimypy
 poetry run pylint data_transformations tests
 ```
 

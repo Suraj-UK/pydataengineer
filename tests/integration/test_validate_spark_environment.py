@@ -1,7 +1,7 @@
+from typing import NoReturn
 import os
 import re
 import subprocess
-
 import pytest
 
 
@@ -26,23 +26,26 @@ def __java_version_output() -> str:
     return java_version
 
 
+def _fail(msg: str) -> NoReturn:
+    pytest.fail(msg)                 # test-friendly failure
+    raise AssertionError(msg)        # satisfy mypy: function never returns
+
+
 def __extract_version_line(java_version_output: str) -> str:
-    version_line = next((line for line in java_version_output.splitlines() if "version" in line),
-                        None)
-    if not version_line:
-        pytest.fail("Couldn't find version information in `java -version` output.")
-    return version_line
+    for line in java_version_output.splitlines():
+        if "version" in line:
+            return line
+    _fail("Couldn't find version information in `java -version` output.")
+    raise AssertionError("unreachable")  # appease mypy
 
 
-# pylint: disable=R1710
 def __parse_major_version(version_line: str) -> int:
     version_regex = re.compile(r'version "(?P<major>\d+)\.(?P<minor>\d+)\.\w+"')
     match = version_regex.search(version_line)
     if match is not None:
         major_version = int(match.group("major"))
         if major_version == 1:
-            # we need to jump this hoop due to Java version naming conventions - it's fun:
-            # https://softwareengineering.stackexchange.com/questions/175075/why-is-java-version-1-x-referred-to-as-java-x
             major_version = int(match.group("minor"))
         return major_version
-    pytest.fail(f"Couldn't parse Java version from {version_line}.")
+    _fail(f"Couldn't parse Java version from {version_line}.")
+    raise AssertionError("unreachable")  # appease mypy
