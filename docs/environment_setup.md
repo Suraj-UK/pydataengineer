@@ -81,15 +81,10 @@ verification so you can confirm everything is wired up correctly.
 ## 2. Create and Activate the Poetry Environment
 
 ```bash
+poetry lock
 poetry install
+poetry run jupyter notebook
 ```
-
-Poetry will create an isolated virtual environment containing the project
-runtime dependencies (NumPy, pandas, PyArrow, and PySpark) and the developer
-tooling (pytest, mypy, pylint).
-
-If you want to reuse the environment in VS Code, select the Poetry-created
-interpreter (shown as `data_transformations` with Python 3.11).
 
 ## 3. Configure Spark / PySpark
 

@@ -1,23 +1,26 @@
-[tool.poetry]
+[project]
 name = "data_transformations"
-version = "0.1.0"
+version = "0.2.0"
 description = "data transformations"
-authors = ["ThoughtWorks <info@thoughtworks.com>"]
-license = "Apache-License-2.0"
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+license = "Apache-2.0"
+authors = [{ name = "ThoughtWorks", email = "info@thoughtworks.com" }]
 
-[tool.poetry.dependencies]
-numpy = "^1.20.2"
-pandas = "^2.0.0"
-pyarrow = "^12.0.0"
-# This is pinned to stay in sync with the version
-# That gets downloaded in `.gitpod.Dockerfile`
-pyspark = "3.5.1"
-python = "~3.11"
+# PEP 621: dependencies must be an ARRAY of PEP 508 strings
+dependencies = [
+  "pandas>=2.0,<3.0",
+  "pyarrow>=12,<13",
+  "pyspark==3.5.1"
+]
 
-[tool.poetry.dev-dependencies]
-pylint = "^2.8.2"
-pytest = "^6.2.4"
+# Keep dev deps in Poetry's group (this is Poetry-specific and correct)
+[tool.poetry.group.dev.dependencies]
+pytest = "^6.2.5"
+pylint = "^2.17.7"
 mypy = "^0.990"
+ipykernel = "^6.29"
+notebook = "^7.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
