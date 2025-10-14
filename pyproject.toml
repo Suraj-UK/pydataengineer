@@ -7,18 +7,18 @@ requires-python = ">=3.11,<3.12"
 license = "Apache-2.0"
 authors = [{ name = "ThoughtWorks", email = "info@thoughtworks.com" }]
 
-# PEP 621: dependencies must be an ARRAY of PEP 508 strings
+# Deps must be array of PEP 508 strings
 dependencies = [
   "pandas>=2.0,<3.0",
   "pyarrow>=12,<13",
   "pyspark==3.5.1"
 ]
 
-# Keep dev deps in Poetry's group (this is Poetry-specific and correct)
+# Dev deps in poetry's group
 [tool.poetry.group.dev.dependencies]
 pytest = "^6.2.5"
 pylint = "^2.17.7"
-mypy = "^0.990"
+mypy = ">=1.8,<2.0"
 ipykernel = "^6.29"
 notebook = "^7.2"
 
