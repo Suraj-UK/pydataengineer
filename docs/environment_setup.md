@@ -1,7 +1,7 @@
 # Local Environment Setup Guide
 
 This guide summarizes the required tooling and verification steps for running the
-`pydataengineer` exercises locally (matching the CI and interview expectations).
+`pydataengineer` exercises locally.
 
 ## 1. Prerequisites
 
@@ -12,37 +12,15 @@ verification so you can confirm everything is wired up correctly.
 1. **Python 3.11.x** – the project is pinned to Python 3.11 via Poetry.
    Choose the method that best matches your operating system:
 
-   - **macOS (Homebrew + pyenv)**
-     ```bash
-     brew install pyenv
-     pyenv install 3.11.8
-     pyenv global 3.11.8
-     ```
-   - **Linux (Ubuntu/Debian)**
-     ```bash
-     sudo apt update
-     sudo apt install -y build-essential libssl-dev zlib1g-dev \
-         libbz2-dev libreadline-dev libsqlite3-dev libffi-dev curl
-     curl https://pyenv.run | bash
-     echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> ~/.bashrc
-     echo 'eval "$(pyenv init -)"' >> ~/.bashrc
-     source ~/.bashrc
-     pyenv install 3.11.8
-     pyenv global 3.11.8
-     ```
-   - **Windows** – install [Python 3.11](https://www.python.org/downloads/windows/)
-     using the official installer (check **“Add python.exe to PATH”**).
-
-   Verify the runtime with:
+   **Windows** – install [Python 3.11](https://www.python.org/downloads/windows/)
+     using the official installer (check **“Add python.exe to PATH”**). Verify the runtime with:
    ```bash
    python --version  # should print 3.11.x
    ```
 
 2. **Poetry** – manages dependencies and the virtual environment.  Poetry’s
    recommended installer works across platforms:
-   ```bash
-   curl -sSL https://install.python-poetry.org | python3 -
-   ```
+   
    On Windows PowerShell:
    ```powershell
    (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content |
@@ -55,8 +33,6 @@ verification so you can confirm everything is wired up correctly.
 
 3. **Java 11 (OpenJDK)** – PySpark uses the JVM.  Install the LTS release that
    matches CI:
-   - **macOS**: `brew install openjdk@11`
-   - **Ubuntu/Debian**: `sudo apt install -y openjdk-11-jdk`
    - **Windows**: download and install [Zulu OpenJDK 11](https://www.azul.com/downloads/)
      or another OpenJDK 11 build, then set the `JAVA_HOME` environment variable.
 
@@ -65,8 +41,7 @@ verification so you can confirm everything is wired up correctly.
    java -version  # should report version 11
    ```
 
-4. **Windows-only Hadoop tooling** – if you run Spark directly on Windows
-   (outside WSL), follow the CI example:
+4. **Windows-only Hadoop tooling**
    ```powershell
    choco install vcredist2010
    git clone --depth 1 -b master https://github.com/cdarlint/winutils.git
@@ -74,9 +49,6 @@ verification so you can confirm everything is wired up correctly.
    $env:Path += ";$env:HADOOP_HOME\bin"
    winutils.exe chmod 777 C:\path\to\project
    ```
-   Prefer WSL 2 for a smoother experience; if you stay on native Windows, run
-   the commands above in an elevated PowerShell and add `HADOOP_HOME`/`Path`
-   updates to your user environment variables so they persist across sessions.
 
 ## 2. Create and Activate the Poetry Environment
 
