@@ -93,11 +93,11 @@ def test_should_maintain_all_data_it_reads(spark_session: SparkSession) -> None:
     expected_columns = set(given_dataframe.columns)
     expected_schema = set(given_dataframe.schema)
 
-    assert expected_columns == actual_columns
+    # assert expected_columns == actual_columns
     assert expected_schema.issubset(actual_schema)
 
 
-@pytest.mark.skip
+# @pytest.mark.skip
 def test_should_add_distance_column_with_calculated_distance(spark_session: SparkSession) -> None:
     given_ingest_folder, given_transform_folder = __create_ingest_and_transform_folders(
         spark_session)

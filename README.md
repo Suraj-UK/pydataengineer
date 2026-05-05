@@ -70,11 +70,13 @@ poetry run pytest tests/unit
 ```bash
 poetry run pytest tests/integration
 ```
+> Comment out the pytest fixtures which skip specific tests to execute the test scripts for that exercise
+> Return to the standard terminal input with a command like pwd
 
 #### Run style checks
 
 ```powershell
-poetry run mypy --config-file mypy.inimypy
+poetry run mypy --config-file mypy.ini
 poetry run pylint data_transformations tests
 ```
 
@@ -159,13 +161,9 @@ A single `*.csv` file containing data similar to:
 
 #### Run the job
 
-```bash
-poetry build && poetry run spark-submit \
-    --master local \
-    --py-files dist/data_transformations-*.whl \
-    jobs/word_count.py \
-    <INPUT_FILE_PATH> \
-    <OUTPUT_PATH>
+```powershell
+poetry build; $wheel=(gci dist -Filter 'data_transformations-*.whl' | select -First 1).FullName
+poetry run spark-submit --master local --py-files $wheel jobs/word_count.py ".\resources\word_count\words.txt" ".\output\word_count"
 ```
 
 ### Citibike
@@ -212,13 +210,9 @@ Historical bike ride `*.csv` file:
 
 ##### Run the job
 
-```bash
-poetry build && poetry run spark-submit \
-    --master local \
-    --py-files dist/data_transformations-*.whl \
-    jobs/citibike_ingest.py \
-    <INPUT_FILE_PATH> \
-    <OUTPUT_PATH>
+```powershell
+poetry build; $wheel=(gci dist -Filter 'data_transformations-*.whl' | select -First 1).FullName
+poetry run spark-submit --master local --py-files $wheel jobs/citibike_ingest.py ".\resources\citibike\citibike.csv" ".\output\citibike_ingest"
 ```
 
 #### Distance calculation
@@ -252,15 +246,10 @@ Historical bike ride `*.parquet` files
 
 ##### Run the job
 
-```bash
-poetry build && poetry run spark-submit \
-    --master local \
-    --py-files dist/data_transformations-*.whl \
-    jobs/citibike_distance_calculation.py \
-    <INPUT_PATH> \
-    <OUTPUT_PATH>
+```powershell
+poetry build; $wheel=(gci dist -Filter 'data_transformations-*.whl' | select -First 1).FullName
+poetry run spark-submit --master local --py-files $wheel jobs/citibike_distance_calculation.py ".\output\citibike_ingest" ".\output\citibike_distance_calculation"
 ```
-
 ---
 
 > ⚠️ do not try to solve the exercises ahead of the interview
